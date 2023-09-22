@@ -26,7 +26,7 @@ class AlphaVantage(object):
     _RAPIDAPI_URL = "https://alpha-vantage.p.rapidapi.com/query?"
 
     def __init__(self, key=None, output_format='json',
-                 treat_info_as_error=True, indexing_type='date', proxy=None, rapidapi=False):
+                 treat_info_as_error=True, indexing_type='date', proxy=None, rapidapi=False, entitlement=None):
         """ Initialize the class
 
         Keyword Arguments:
@@ -61,6 +61,7 @@ class AlphaVantage(object):
             }
         self.rapidapi = rapidapi
         self.key = key
+        self.entitlement = entitlement
         self.output_format = output_format
         if self.output_format == 'pandas' and not _PANDAS_FOUND:
             raise ValueError("The pandas library was not found, therefore can "
@@ -153,10 +154,12 @@ class AlphaVantage(object):
                                      self.output_format.lower()))
             apikey_parameter = "" if self.rapidapi else "&apikey={}".format(
                 self.key)
+            entitlement_parameter = "" if self.entitlement is None else "&entitlement={}".format(
+                self.entitlement)
             if self._append_type:
-                url = '{}{}&datatype={}'.format(url, apikey_parameter, oformat)
+                url = '{}{}&datatype={}'.format(url, apikey_parameter, entitlement_parameter, oformat)
             else:
-                url = '{}{}'.format(url, apikey_parameter)
+                url = '{}{}'.format(url, apikey_parameter, entitlement_parameter)
             return self._handle_api_call(url), data_key, meta_data_key
         return _call_wrapper
 
