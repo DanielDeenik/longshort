@@ -157,9 +157,9 @@ class AlphaVantage(object):
             entitlement_parameter = "" if self.entitlement is None else "&entitlement={}".format(
                 self.entitlement)
             if self._append_type:
-                url = '{}{}&datatype={}'.format(url, apikey_parameter, entitlement_parameter, oformat)
+                url = '{}{}{}&datatype={}'.format(url, apikey_parameter, entitlement_parameter, oformat)
             else:
-                url = '{}{}'.format(url, apikey_parameter, entitlement_parameter)
+                url = '{}{}{}'.format(url, apikey_parameter, entitlement_parameter)
             return self._handle_api_call(url), data_key, meta_data_key
         return _call_wrapper
 
