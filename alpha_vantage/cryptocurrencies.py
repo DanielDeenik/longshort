@@ -60,7 +60,7 @@ class CryptoCurrencies(av):
 
     @av._output_format
     @av._call_api_on_func
-    def get_digital_currency_exchange_rate(self, from_currency, to_currency):
+    def get_digital_currency_exchange_rate(self, from_currency, to_currency, entitlement=None):
         """ Returns the realtime exchange rate for any pair of digital
         currency (e.g., BTC) or physical currency (e.g., USD).
         Keyword Arguments:

@@ -7,7 +7,7 @@ class TimeSeries(av):
     """
     @av._output_format
     @av._call_api_on_func
-    def get_intraday(self, symbol, interval='15min', outputsize='compact'):
+    def get_intraday(self, symbol, interval='15min', outputsize='compact', entitlement=None):
         """ Return intraday time series in two json objects as data and
         meta_data. It raises ValueError when problems arise
 
