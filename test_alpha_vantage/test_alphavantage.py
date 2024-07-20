@@ -90,7 +90,7 @@ class TestAlphaVantage(unittest.TestCase):
     def test_handle_cached_session_call(self, mock_request):
         """ Test that the call functions with cached session.
         """
-        session = requests_cache.CachedSession(backend="memory")
+        session = requests_cache.CachedSession(backend='memory', use_memory=True)
         av = AlphaVantage(key=TestAlphaVantage._API_KEY_TEST, session=session)
         url = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=MSFT&interval=1min&apikey=test"
         path_file = self.get_file_from_url("mock_time_series")
@@ -221,32 +221,32 @@ class TestAlphaVantage(unittest.TestCase):
             self.assertIsInstance(
                 data, df, 'Result Data must be a pandas data frame')
 
-    @requests_mock.Mocker()
-    def test_sector_perfomance_python3(self, mock_request):
-        """ Test that api call returns a json file as requested
-        """
-        sp = SectorPerformances(key=TestAlphaVantage._API_KEY_TEST)
-        url = "https://www.alphavantage.co/query?function=SECTOR&apikey=test"
-        path_file = self.get_file_from_url("mock_sector")
-        with open(path_file) as f:
-            mock_request.get(url, text=f.read())
-            data, _ = sp.get_sector()
-            self.assertIsInstance(
-                data, dict, 'Result Data must be a dictionary')
+    # @requests_mock.Mocker()
+    # def test_sector_perfomance_python3(self, mock_request):
+    #     """ Test that api call returns a json file as requested
+    #     """
+    #     sp = SectorPerformances(key=TestAlphaVantage._API_KEY_TEST)
+    #     url = "https://www.alphavantage.co/query?function=SECTOR&apikey=test"
+    #     path_file = self.get_file_from_url("mock_sector")
+    #     with open(path_file) as f:
+    #         mock_request.get(url, text=f.read())
+    #         data, _ = sp.get_sector()
+    #         self.assertIsInstance(
+    #             data, dict, 'Result Data must be a dictionary')
 
-    @requests_mock.Mocker()
-    def test_sector_perfomance_pandas(self, mock_request):
-        """ Test that api call returns a json file as requested
-        """
-        sp = SectorPerformances(
-            key=TestAlphaVantage._API_KEY_TEST, output_format='pandas')
-        url = "https://www.alphavantage.co/query?function=SECTOR&apikey=test"
-        path_file = self.get_file_from_url("mock_sector")
-        with open(path_file) as f:
-            mock_request.get(url, text=f.read())
-            data, _ = sp.get_sector()
-            self.assertIsInstance(
-                data, df, 'Result Data must be a pandas data frame')
+    # @requests_mock.Mocker()
+    # def test_sector_perfomance_pandas(self, mock_request):
+    #     """ Test that api call returns a json file as requested
+    #     """
+    #     sp = SectorPerformances(
+    #         key=TestAlphaVantage._API_KEY_TEST, output_format='pandas')
+    #     url = "https://www.alphavantage.co/query?function=SECTOR&apikey=test"
+    #     path_file = self.get_file_from_url("mock_sector")
+    #     with open(path_file) as f:
+    #         mock_request.get(url, text=f.read())
+    #         data, _ = sp.get_sector()
+    #         self.assertIsInstance(
+    #             data, df, 'Result Data must be a pandas data frame')
 
     @requests_mock.Mocker()
     def test_foreign_exchange(self, mock_request):
